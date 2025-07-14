@@ -17,10 +17,10 @@ def get_retriever():
     # 定义 Embeddings
     embedding = ZhipuAIEmbeddings()
     # 向量数据库持久化路径 - 使用相对路径适应云端环境
-    persist_directory = './chroma'
+    #persist_directory = './chroma'
     # 加载数据库
     vectordb = Chroma(
-        persist_directory=persist_directory,
+        #persist_directory=persist_directory,
         embedding_function=embedding
     )
     return vectordb.as_retriever()
