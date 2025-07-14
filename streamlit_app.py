@@ -18,8 +18,8 @@ def get_retriever():
     embedding = ZhipuAIEmbeddings()
     chroma_api_key = os.getenv("CHROMA_API_KEY") or os.getenv("chroma_api_key")
     chroma_cloud_host = os.getenv("CHROMA_CLOUD_HOST") or os.getenv("chroma_cloud_host")
-    st.write("chroma_api_key:", chroma_api_key, type(chroma_api_key))
-    st.write("chroma_cloud_host:", chroma_cloud_host, type(chroma_cloud_host))
+    st.write("chroma_api_key:", chroma_api_key, type(chroma_api_key).__name__)
+    st.write("chroma_cloud_host:", chroma_cloud_host, type(chroma_cloud_host).__name__)
     chroma_api_key = str(chroma_api_key or "").strip()
     chroma_cloud_host = str(chroma_cloud_host or "").strip()
     if not chroma_api_key or not chroma_cloud_host:
