@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from zhipuai_embedding import ZhipuAIEmbeddings
 from zhipuai_llm import ZhipuaiLLM
 from langchain_community.vectorstores import Chroma
+from chromadb.config import Settings
 
 # 加载环境变量
 load_dotenv()
@@ -14,14 +15,20 @@ load_dotenv()
 
 # 定义get_retriever函数，该函数返回一个检索器
 def get_retriever():
-    # 定义 Embeddings
     embedding = ZhipuAIEmbeddings()
-    # 向量数据库持久化路径 - 使用相对路径适应云端环境
-    #persist_directory = './chroma'
-    # 加载数据库
+    chroma_api_key = os.getenv("CHROMA_API_KEY") or os.getenv("chroma_api_key")
+    chroma_cloud_host = os.getenv("CHROMA_CLOUD_HOST") or os.getenv("chroma_cloud_host")
+    if not chroma_api_key or not chroma_cloud_host:
+        st.error("请在 Streamlit 的 Secrets 中配置 chroma_api_key 和 chroma_cloud_host")
+        st.stop()
+    settings = Settings(
+        chroma_api_impl="rest",
+        chroma_server_host=chroma_cloud_host,
+        chroma_server_http_headers={"Authorization": f"Bearer {chroma_api_key}"}
+    )
     vectordb = Chroma(
-        #persist_directory=persist_directory,
-        embedding_function=embedding
+        embedding_function=embedding,
+        client_settings=settings
     )
     return vectordb.as_retriever()
 
