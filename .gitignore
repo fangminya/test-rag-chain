@@ -1,6 +1,4 @@
 # 环境变量文件
-.env
-zhipuapi.env
 
 # Python
 __pycache__/
@@ -25,7 +23,6 @@ wheels/
 *.egg
 
 # 向量数据库
-chroma/
 data_base/
 
 # IDE
